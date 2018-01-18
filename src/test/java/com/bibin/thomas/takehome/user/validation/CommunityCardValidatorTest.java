@@ -52,7 +52,7 @@ public class CommunityCardValidatorTest {
     @Test
     public void testExtraSpacesCommunityCardValidation() {
         CommunityCardValidator communityCardValidator
-                = new CommunityCardValidator("KS    AD  3H TD       7C");
+                = new CommunityCardValidator("     KS    AD  3H TD       7C ");
 
         Set<Card> actualSet = communityCardValidator.getValidCardSet();
 

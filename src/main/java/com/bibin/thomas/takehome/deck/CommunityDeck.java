@@ -7,8 +7,8 @@ import java.util.Set;
 
 public class CommunityDeck {
     private String inputString;
-    private Set<Card> communityDeck;
-    private boolean isValid;
+    private Set<Card> communityCardSet;
+    private boolean isValid = true;
 
     public CommunityDeck(String userInput) {
         this.inputString = userInput;
@@ -16,7 +16,7 @@ public class CommunityDeck {
                 new CommunityCardValidator(this.inputString);
 
         if (communityCardValidator.isValid()) {
-            this.communityDeck = communityCardValidator.getValidCardSet();
+            this.communityCardSet = communityCardValidator.getValidCardSet();
             this.isValid = true;
         } else {
             this.isValid = false;
@@ -24,6 +24,10 @@ public class CommunityDeck {
     }
 
     public boolean isValid() {
-        return true;
+        return isValid;
+    }
+
+    public Set<Card> getCommunityCardSet() {
+        return communityCardSet;
     }
 }

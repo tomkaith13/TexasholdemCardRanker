@@ -2,18 +2,31 @@ package com.bibin.thomas.takehome.Player;
 
 import com.bibin.thomas.takehome.cards.Card;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class Player {
     private String name;
     private Set<Card> hand;
-    private String input;
 
-    public Player(String input) {
-        this.input = input;
+    public Player(String name, Set<Card> hand) {
+        this.name = name;
+        this.hand = hand;
     }
 
-    public boolean isValid() {
-        return true;
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Player) {
+            Player otherObj = (Player) obj;
+
+            if (name.equals(otherObj.name) && hand.equals(otherObj.hand))
+                return true;
+        }
+        return false;
     }
 }

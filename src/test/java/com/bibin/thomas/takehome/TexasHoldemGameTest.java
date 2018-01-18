@@ -4,11 +4,15 @@ import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -30,10 +34,12 @@ public class TexasHoldemGameTest {
 //        System.setErr(null);
 //    }
 
+
     @Test
-    public void testHelloWorld() {
+    public void testGame() {
 
 //        TexasHoldemGame.main(null);
 //        assertEquals("Welcome TexasHoldem!", outContent.toString());
+
     }
 }
