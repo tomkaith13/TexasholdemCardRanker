@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bibin.thomas.takehome</groupId>
-    <artifactId>texasholdem.artemys</artifactId>
+    <artifactId>texasholdem.arterys</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>texasholdem.artemys</name>
+    <name>texasholdem.arterys</name>
     <url>http://maven.apache.org</url>
 
     <properties>
