@@ -28,6 +28,7 @@ public class CommunityCardValidatorTest {
         expectedCardSet.add(new Card(CardFace.TEN, CardSuite.DIAMONDS));
 
         assertEquals("Actual and expected not equal", expectedCardSet, actualSet);
+        assertTrue(communityCardValidator.isValid());
     }
 
     @Test
@@ -45,6 +46,7 @@ public class CommunityCardValidatorTest {
         expectedCardSet.add(new Card(CardFace.TEN, CardSuite.DIAMONDS));
 
         assertNotEquals("Actual and expected equal", expectedCardSet, actualSet);
+        assertFalse(communityCardValidator.isValid());
     }
 
     @Test
@@ -62,6 +64,7 @@ public class CommunityCardValidatorTest {
         expectedCardSet.add(new Card(CardFace.TEN, CardSuite.DIAMONDS));
 
         assertEquals("Actual and expected not equal", expectedCardSet, actualSet);
+        assertTrue(communityCardValidator.isValid());
     }
 
 
@@ -80,6 +83,16 @@ public class CommunityCardValidatorTest {
         expectedCardSet.add(new Card(CardFace.TEN, CardSuite.DIAMONDS));
 
         assertEquals("Actual and expected not equal", expectedCardSet, actualSet);
+        assertTrue(communityCardValidator.isValid());
+    }
+
+    @Test
+    public void testInvalidCommunityCardValidator() {
+
+        CommunityCardValidator ccValidator
+                = new CommunityCardValidator("ZZ 3H XY");
+
+        assertFalse(ccValidator.isValid());
     }
 
 }

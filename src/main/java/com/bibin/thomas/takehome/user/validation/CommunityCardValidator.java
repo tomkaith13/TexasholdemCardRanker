@@ -9,13 +9,13 @@ import java.util.*;
 
 public class CommunityCardValidator {
     private String input;
-    private boolean isValid;
+    private boolean isValid = true;
     Set<Card> validCardSet;
 
 
     public CommunityCardValidator(String input) {
         validCardSet = new HashSet<Card>();
-        this.input = input;
+        this.input = input.trim();
         List<String> cardStringList = cardSplitter();
 
         for (String cardString : cardStringList) {
@@ -38,6 +38,11 @@ public class CommunityCardValidator {
                 CardFace face = GlobalMaps.faceMap.get(charFace);
                 CardSuite suite = GlobalMaps.suiteMap.get(charSuit);
 
+                if (face == null || suite == null) {
+                    isValid = false;
+                    return;
+                }
+
                 Card c = new Card(face, suite);
                 validCardSet.add(c);
             }
@@ -46,7 +51,7 @@ public class CommunityCardValidator {
     }
 
     public boolean isValid() {
-        return true;
+        return this.isValid;
     }
 
     private List<String> cardSplitter() {

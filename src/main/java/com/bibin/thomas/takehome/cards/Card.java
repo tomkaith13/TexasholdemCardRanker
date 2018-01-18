@@ -29,4 +29,12 @@ public class Card {
     public int hashCode() {
         return Objects.hash(this.suite, this.face);
     }
+
+    public CardSuite getSuite() {
+        return suite;
+    }
+
+    public CardFace getFace() {
+        return face;
+    }
 }
