@@ -20,7 +20,7 @@ public class PokerHand implements Comparable<PokerHand> {
     public PokerHand(CommunityDeck communityDeck, Player player) {
         this.communityDeck = communityDeck;
         this.player = player;
-        rankedSet = new TreeSet<Card>();
+        rankedSet = new TreeSet<>();
 
         rankedSet.addAll(communityDeck.getCommunityCardSet());
         rankedSet.addAll(player.getHand());
@@ -29,7 +29,7 @@ public class PokerHand implements Comparable<PokerHand> {
 
     }
 
-    public void calculateHandRank() {
+    private void calculateHandRank() {
 
         if (isRoyalFlush()) {
             this.pokerHandRankType = HandRank.ROYAL_FLUSH;
@@ -138,10 +138,10 @@ public class PokerHand implements Comparable<PokerHand> {
         for (Card aceCard : aceList) {
             final CardSuite aceCardSuit = aceCard.getSuite();
 
-            if ((kingList.stream().filter(c -> c.getSuite().equals(aceCardSuit)).findAny().isPresent()) &&
-                    (queenList.stream().filter(c -> c.getSuite().equals(aceCardSuit)).findAny().isPresent()) &&
-                    (jackList.stream().filter(c -> c.getSuite().equals(aceCardSuit)).findAny().isPresent()) &&
-                    (tenList.stream().filter(c -> c.getSuite().equals(aceCardSuit)).findAny().isPresent())
+            if ((kingList.stream().anyMatch(c -> c.getSuite().equals(aceCardSuit))) &&
+                    (queenList.stream().anyMatch(c -> c.getSuite().equals(aceCardSuit))) &&
+                    (jackList.stream().anyMatch(c -> c.getSuite().equals(aceCardSuit))) &&
+                    (tenList.stream().anyMatch(c -> c.getSuite().equals(aceCardSuit)))
                     ) {
                 return true;
             }

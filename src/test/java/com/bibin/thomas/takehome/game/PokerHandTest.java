@@ -5,15 +5,14 @@ import com.bibin.thomas.takehome.cards.Card;
 import com.bibin.thomas.takehome.cards.CardFace;
 import com.bibin.thomas.takehome.cards.CardSuite;
 import com.bibin.thomas.takehome.deck.CommunityDeck;
-import com.bibin.thomas.takehome.user.validation.PlayerCardValidator;
 import org.junit.Test;
-import org.mockito.Mock;
+
 
 import java.util.Arrays;
 import java.util.HashSet;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+
 
 public class PokerHandTest {
 
