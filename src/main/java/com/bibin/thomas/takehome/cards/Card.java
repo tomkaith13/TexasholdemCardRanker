@@ -1,14 +1,18 @@
 package com.bibin.thomas.takehome.cards;
 
+import com.bibin.thomas.takehome.globals.GlobalMaps;
+
 import java.util.Objects;
 
-public class Card {
+public class Card implements Comparable<Card> {
     private CardSuite suite;
     private CardFace face;
+    private int faceRank;
 
     public Card(CardFace face, CardSuite suite) {
         this.suite = suite;
         this.face = face;
+        this.faceRank = GlobalMaps.faceRankMap.get(face);
     }
 
     @Override
@@ -25,6 +29,10 @@ public class Card {
         return false;
     }
 
+    public int compareTo(Card o) {
+        return Integer.compare(this.faceRank, o.faceRank);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(this.suite, this.face);
@@ -37,4 +45,5 @@ public class Card {
     public CardFace getFace() {
         return face;
     }
+
 }

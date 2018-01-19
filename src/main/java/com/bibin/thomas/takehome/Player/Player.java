@@ -29,4 +29,12 @@ public class Player {
         }
         return false;
     }
+
+    public Set<Card> getHand() {
+        return hand;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
