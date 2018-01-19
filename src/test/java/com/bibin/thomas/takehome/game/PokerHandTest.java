@@ -20,12 +20,12 @@ public class PokerHandTest {
 
     @Test
     public void testRoyalFlush() {
-//        CommunityDeck communityDeck = new CommunityDeck("KS AS 3H 7C TS");
-//
-//        Player player = new Player("John", new HashSet<Card>(Arrays.asList(new Card(CardFace.QUEEN, CardSuite.SPADES), new Card(CardFace.JACK, CardSuite.SPADES))));
-//        PokerHand pokerHand = new PokerHand(communityDeck, player);
-//
-//        assertEquals("Rank not equal to royal flush!!", HandRank.ROYAL_FLUSH, pokerHand.getPokerHandRankType());
+        CommunityDeck communityDeck = new CommunityDeck("KS AS 3H 7C TS");
+
+        Player player = new Player("John", new HashSet<Card>(Arrays.asList(new Card(CardFace.QUEEN, CardSuite.SPADES), new Card(CardFace.JACK, CardSuite.SPADES))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertEquals("Rank not equal to royal flush!!", HandRank.ROYAL_FLUSH, pokerHand.getPokerHandRankType());
     }
 
 }
