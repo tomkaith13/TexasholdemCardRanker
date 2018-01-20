@@ -114,5 +114,25 @@ public class PokerHandTest {
         assertNotEquals("Rank is Four of a Kind", HandRank.FULL_HOUSE, pokerHand.getPokerHandRankType());
     }
 
+    @Test
+    public void testFlush() {
+        CommunityDeck communityDeck = new CommunityDeck("7S 2D 3S 4C 9S");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.SIX, CardSuite.SPADES), new Card(CardFace.TEN, CardSuite.SPADES))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertTrue(pokerHand.isValid());
+        assertEquals("Rank is Flush", HandRank.FLUSH, pokerHand.getPokerHandRankType());
+    }
+
+    @Test
+    public void testInvalidFlush() {
+        CommunityDeck communityDeck = new CommunityDeck("KS 6S 3S 7S TS");
+
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.FOUR, CardSuite.SPADES), new Card(CardFace.FIVE, CardSuite.SPADES))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertNotEquals("Rank not equal to flush!!", HandRank.FLUSH, pokerHand.getPokerHandRankType());
+    }
+
 
 }
