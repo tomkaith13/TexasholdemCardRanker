@@ -17,10 +17,17 @@ public class GameRanker {
         this.playerSet = playerSet;
 
         generatePlayerPokerHand();
-        displaySortedPlayerHand();
+
     }
 
-    private void displaySortedPlayerHand() {
+    public void displaySortedPlayerHand() {
+        System.out.println("==========================================");
+        System.out.println("Player Rankings:");
+        for (PokerHand pHand : playerHandList) {
+            System.out.println("Player:" + pHand.getPlayer().getName());
+            System.out.println("rank:" + pHand.getPokerHandRankType().toString());
+            System.out.println("");
+        }
 
     }
 
@@ -31,17 +38,11 @@ public class GameRanker {
             if (pHand.isValid()) {
                 playerHandList.add(pHand);
             } else {
-                break;
+                System.out.println("Invalid poker hand.. Ignoring player input");
             }
         }
-
         Collections.sort(playerHandList);
-        playerHandList.size();
-
     }
 
 
-    public void printPlayerRank() {
-        System.out.println("Player Rankings:");
-    }
 }

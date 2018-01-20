@@ -280,4 +280,7 @@ public class PokerHand implements Comparable<PokerHand> {
         return isValid;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
 }
