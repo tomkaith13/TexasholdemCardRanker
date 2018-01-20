@@ -86,4 +86,33 @@ public class PokerHandTest {
         assertEquals("Rank is not Four of a Kind", HandRank.FOUR_OF_KIND, pokerHand.getPokerHandRankType());
     }
 
+    @Test
+    public void testInvalidFourOfKind() {
+        CommunityDeck communityDeck = new CommunityDeck("TS 6D 3S 7C 9C");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+        assertTrue(pokerHand.isValid());
+        assertNotEquals("Rank is Four of a Kind", HandRank.FOUR_OF_KIND, pokerHand.getPokerHandRankType());
+    }
+
+    @Test
+    public void testFullHouse() {
+        CommunityDeck communityDeck = new CommunityDeck("7S 7D 3S 7C 9C");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertTrue(pokerHand.isValid());
+        assertEquals("Rank is Full House", HandRank.FULL_HOUSE, pokerHand.getPokerHandRankType());
+    }
+
+    @Test
+    public void testInvalidFullHouse() {
+        CommunityDeck communityDeck = new CommunityDeck("TS 6D 3S 7C 9C");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+        assertTrue(pokerHand.isValid());
+        assertNotEquals("Rank is Four of a Kind", HandRank.FULL_HOUSE, pokerHand.getPokerHandRankType());
+    }
+
+
 }

@@ -104,7 +104,19 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
     private boolean isFullHouse() {
-        return false;
+        boolean tripleFound = false, pairFound = false;
+
+        for (CardFace cFace : CardFace.values()) {
+            if (rankedSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3) {
+                tripleFound = true;
+                continue;
+            }
+
+            if (rankedSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 2) {
+                pairFound = true;
+            }
+        }
+        return tripleFound && pairFound;
     }
 
     private boolean isFourOfKind() {
