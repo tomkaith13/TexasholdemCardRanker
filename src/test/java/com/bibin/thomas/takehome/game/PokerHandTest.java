@@ -172,5 +172,45 @@ public class PokerHandTest {
         assertNotEquals("Rank is Three of a Kind", HandRank.THREE_OF_KIND, pokerHand.getPokerHandRankType());
     }
 
+    @Test
+    public void testTwoPair() {
+        CommunityDeck communityDeck = new CommunityDeck("7S 4D 3S 7C 9C");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertTrue(pokerHand.isValid());
+        assertEquals("Rank is not Two Pair", HandRank.TWO_PAIR, pokerHand.getPokerHandRankType());
+    }
+
+    @Test
+    public void testInvalidTwoPair() {
+        CommunityDeck communityDeck = new CommunityDeck("7S 7D 3S 7C 9C");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertTrue(pokerHand.isValid());
+        assertNotEquals("Rank is Two Pair", HandRank.TWO_PAIR, pokerHand.getPokerHandRankType());
+    }
+
+    @Test
+    public void testOnePair() {
+        CommunityDeck communityDeck = new CommunityDeck("7S 4D 3S 6C 9C");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertTrue(pokerHand.isValid());
+        assertEquals("Rank is not One Pair", HandRank.ONE_PAIR, pokerHand.getPokerHandRankType());
+    }
+
+    @Test
+    public void testInvalidOnePair() {
+        CommunityDeck communityDeck = new CommunityDeck("7S 4D 3S 7C 9C");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertTrue(pokerHand.isValid());
+        assertNotEquals("Rank is One Pair", HandRank.ONE_PAIR, pokerHand.getPokerHandRankType());
+    }
+
 
 }

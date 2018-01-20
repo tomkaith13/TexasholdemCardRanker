@@ -84,11 +84,28 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
     private boolean isOnePair() {
+        for (CardFace cFace : CardFace.values()) {
+            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2)
+                return true;
+        }
         return false;
     }
 
     private boolean isTwoPair() {
-        return false;
+        boolean onePairFound = false, twoPairFound = false;
+
+        for (CardFace cFace : CardFace.values()) {
+            if (!onePairFound &&
+                    handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
+                onePairFound = true;
+                continue;
+            }
+
+            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
+                twoPairFound = true;
+            }
+        }
+        return onePairFound && twoPairFound;
     }
 
     private boolean isThreeOfKind() {
