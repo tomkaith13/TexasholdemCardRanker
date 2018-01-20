@@ -92,11 +92,15 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
     private boolean isThreeOfKind() {
+        for (CardFace cFace : CardFace.values()) {
+            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3)
+                return true;
+        }
         return false;
     }
 
     private boolean isStraight() {
-        return false;
+        return foundIncreasingCardSequence(new ArrayList<>(handSet));
     }
 
     private boolean isFlush() {

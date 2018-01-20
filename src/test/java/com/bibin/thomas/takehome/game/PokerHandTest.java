@@ -134,5 +134,43 @@ public class PokerHandTest {
         assertNotEquals("Rank not equal to flush!!", HandRank.FLUSH, pokerHand.getPokerHandRankType());
     }
 
+    @Test
+    public void testStraight() {
+        CommunityDeck communityDeck = new CommunityDeck("7S 8D 3S 4C 9S");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.SIX, CardSuite.SPADES), new Card(CardFace.TEN, CardSuite.HEARTS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertTrue(pokerHand.isValid());
+        assertEquals("Rank is Straight", HandRank.STRAIGHT, pokerHand.getPokerHandRankType());
+    }
+
+    @Test
+    public void testInvalidStraight() {
+        CommunityDeck communityDeck = new CommunityDeck("KS 6S 3S 7S TS");
+
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.FOUR, CardSuite.SPADES), new Card(CardFace.FIVE, CardSuite.SPADES))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertNotEquals("Rank equal to straight !!", HandRank.STRAIGHT, pokerHand.getPokerHandRankType());
+    }
+
+    @Test
+    public void testThreeOfKind() {
+        CommunityDeck communityDeck = new CommunityDeck("TS 6D 3S 7C 9C");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+        assertTrue(pokerHand.isValid());
+        assertEquals("Rank is not Three of a Kind", HandRank.THREE_OF_KIND, pokerHand.getPokerHandRankType());
+    }
+
+    @Test
+    public void testInvalidThreeOfKind() {
+        CommunityDeck communityDeck = new CommunityDeck("TS 6D 3S 7C TC");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+        assertTrue(pokerHand.isValid());
+        assertNotEquals("Rank is Three of a Kind", HandRank.THREE_OF_KIND, pokerHand.getPokerHandRankType());
+    }
+
 
 }
