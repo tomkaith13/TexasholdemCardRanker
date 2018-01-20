@@ -20,7 +20,7 @@ public class CommunityCardValidatorTest {
 
         Set<Card> actualSet = communityCardValidator.getValidCardSet();
 
-        Set<Card> expectedCardSet = new HashSet<Card>();
+        Set<Card> expectedCardSet = new HashSet<>();
         expectedCardSet.add(new Card(CardFace.KING, CardSuite.SPADES));
         expectedCardSet.add(new Card(CardFace.ACE, CardSuite.DIAMONDS));
         expectedCardSet.add(new Card(CardFace.THREE, CardSuite.HEARTS));
@@ -38,7 +38,7 @@ public class CommunityCardValidatorTest {
 
         Set<Card> actualSet = communityCardValidator.getValidCardSet();
 
-        Set<Card> expectedCardSet = new HashSet<Card>();
+        Set<Card> expectedCardSet = new HashSet<>();
         expectedCardSet.add(new Card(CardFace.KING, CardSuite.SPADES));
         expectedCardSet.add(new Card(CardFace.ACE, CardSuite.DIAMONDS));
         expectedCardSet.add(new Card(CardFace.THREE, CardSuite.HEARTS));
@@ -56,7 +56,7 @@ public class CommunityCardValidatorTest {
 
         Set<Card> actualSet = communityCardValidator.getValidCardSet();
 
-        Set<Card> expectedCardSet = new HashSet<Card>();
+        Set<Card> expectedCardSet = new HashSet<>();
         expectedCardSet.add(new Card(CardFace.KING, CardSuite.SPADES));
         expectedCardSet.add(new Card(CardFace.ACE, CardSuite.DIAMONDS));
         expectedCardSet.add(new Card(CardFace.THREE, CardSuite.HEARTS));
@@ -75,7 +75,7 @@ public class CommunityCardValidatorTest {
 
         Set<Card> actualSet = communityCardValidator.getValidCardSet();
 
-        Set<Card> expectedCardSet = new HashSet<Card>();
+        Set<Card> expectedCardSet = new HashSet<>();
         expectedCardSet.add(new Card(CardFace.KING, CardSuite.SPADES));
         expectedCardSet.add(new Card(CardFace.ACE, CardSuite.DIAMONDS));
         expectedCardSet.add(new Card(CardFace.THREE, CardSuite.HEARTS));
@@ -91,6 +91,15 @@ public class CommunityCardValidatorTest {
 
         CommunityCardValidator ccValidator
                 = new CommunityCardValidator("ZZ 3H XY");
+
+        assertFalse(ccValidator.isValid());
+    }
+
+    @Test
+    public void testLessCountCommunityCardValidator() {
+
+        CommunityCardValidator ccValidator
+                = new CommunityCardValidator("TS AC 3H");
 
         assertFalse(ccValidator.isValid());
     }

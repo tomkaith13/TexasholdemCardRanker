@@ -20,10 +20,7 @@ public class Card implements Comparable<Card> {
         if (obj instanceof Card) {
             Card otherCard = (Card) obj;
 
-            if (this.face == otherCard.face && this.suite == otherCard.suite)
-                return true;
-            else
-                return false;
+            return this.face == otherCard.face && this.suite == otherCard.suite;
 
         }
         return false;
@@ -46,4 +43,7 @@ public class Card implements Comparable<Card> {
         return face;
     }
 
+    public int getFaceRank() {
+        return faceRank;
+    }
 }

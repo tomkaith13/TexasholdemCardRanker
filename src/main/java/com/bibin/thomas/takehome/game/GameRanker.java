@@ -10,7 +10,7 @@ public class GameRanker {
 
     private CommunityDeck communityDeck;
     private Set<Player> playerSet;
-    private List<PokerHand> playerHandList = new LinkedList<PokerHand>();
+    private List<PokerHand> playerHandList = new LinkedList<>();
 
     public GameRanker(CommunityDeck communityDeck, Set<Player> playerSet) {
         this.communityDeck = communityDeck;
@@ -26,7 +26,13 @@ public class GameRanker {
 
     private void generatePlayerPokerHand() {
         for (Player p : playerSet) {
-            playerHandList.add(new PokerHand(communityDeck, p));
+            PokerHand pHand = new PokerHand(communityDeck, p);
+
+            if (pHand.isValid()) {
+                playerHandList.add(pHand);
+            } else {
+                break;
+            }
         }
 
         Collections.sort(playerHandList);

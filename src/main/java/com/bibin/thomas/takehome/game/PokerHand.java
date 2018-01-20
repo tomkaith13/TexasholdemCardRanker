@@ -15,15 +15,23 @@ public class PokerHand implements Comparable<PokerHand> {
     private Player player;
     private HandRank pokerHandRankType;
     private Set<Card> rankedSet;
+    private boolean isValid = true;
     private int rank = 0;
 
     public PokerHand(CommunityDeck communityDeck, Player player) {
         this.communityDeck = communityDeck;
         this.player = player;
-        rankedSet = new TreeSet<>();
+        rankedSet = new HashSet<>();
 
         rankedSet.addAll(communityDeck.getCommunityCardSet());
         rankedSet.addAll(player.getHand());
+
+        if (rankedSet.size() != 7) {
+            System.out.println("Error in Player:" + player.getName());
+            System.out.println("Duplicates in community cards and player cards");
+            isValid = false;
+            return;
+        }
 
         calculateHandRank();
 
@@ -100,10 +108,68 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
     private boolean isFourOfKind() {
+        for (CardFace cFace : CardFace.values()) {
+            if (rankedSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 4)
+                return true;
+        }
         return false;
     }
 
     private boolean isStraightFlush() {
+        //create a list of all four suites
+
+        List<Card> clubsList = rankedSet.stream()
+                .filter(c -> c.getSuite().equals(CardSuite.CLUBS))
+                .collect(Collectors.toList());
+
+        List<Card> diamondsList = rankedSet.stream()
+                .filter(c -> c.getSuite().equals(CardSuite.DIAMONDS))
+                .collect(Collectors.toList());
+        List<Card> heartsList = rankedSet.stream()
+                .filter(c -> c.getSuite().equals(CardSuite.HEARTS))
+                .collect(Collectors.toList());
+        List<Card> spadesList = rankedSet.stream()
+                .filter(c -> c.getSuite().equals(CardSuite.SPADES))
+                .collect(Collectors.toList());
+
+        if (clubsList.size() < 5 &&
+                diamondsList.size() < 5 &&
+                heartsList.size() < 5 &&
+                spadesList.size() < 5)
+            return false;
+
+        if (clubsList.size() >= 5) {
+            if (foundIncreasingCardSequence(clubsList))
+                return true;
+        } else if (diamondsList.size() >= 5) {
+            if (foundIncreasingCardSequence(diamondsList))
+                return true;
+        }
+        if (heartsList.size() >= 5) {
+            return foundIncreasingCardSequence(heartsList);
+        } else if (spadesList.size() >= 5) {
+            return foundIncreasingCardSequence(spadesList);
+        }
+
+        return false;
+    }
+
+    private boolean foundIncreasingCardSequence(List<Card> cardList) {
+        Collections.sort(cardList);
+
+        for (int i = 0; i <= cardList.size() - 5; i++) {
+            List<Card> subList = cardList.subList(i, i + 5);
+
+            //using arithmetic progression to figure out if increasing by one
+            // the formula for ap sum is :  ap_sum = n/2 * [2a +(n-1)*d] where d = 1 and n = 5
+            int sum = subList.stream().mapToInt(Card::getFaceRank).sum();
+            int firstCardRank = subList.get(0).getFaceRank();
+
+            int apSum = (5 * ((2 * firstCardRank) + 4)) / 2;
+
+            if (sum == apSum)
+                return true;
+        }
         return false;
     }
 
@@ -173,5 +239,8 @@ public class PokerHand implements Comparable<PokerHand> {
 //        return false;
 //    }
 
+    public boolean isValid() {
+        return isValid;
+    }
 
 }

@@ -10,11 +10,11 @@ import java.util.*;
 public class CommunityCardValidator {
     private String input;
     private boolean isValid = true;
-    Set<Card> validCardSet;
+    private Set<Card> validCardSet;
 
 
     public CommunityCardValidator(String input) {
-        validCardSet = new HashSet<Card>();
+        validCardSet = new HashSet<>();
         this.input = input.trim();
         List<String> cardStringList = cardSplitter();
 
@@ -46,8 +46,10 @@ public class CommunityCardValidator {
                 Card c = new Card(face, suite);
                 validCardSet.add(c);
             }
-
         }
+
+        if (validCardSet.size() != 5)
+            isValid = false;
     }
 
     public boolean isValid() {
