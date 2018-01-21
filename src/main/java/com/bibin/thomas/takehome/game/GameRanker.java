@@ -23,10 +23,13 @@ public class GameRanker {
     public void displaySortedPlayerHand() {
         System.out.println("==========================================");
         System.out.println("Player Rankings:");
+        int rank = 1;
         for (PokerHand pHand : playerHandList) {
-            System.out.println("Player:" + pHand.getPlayer().getName());
-            System.out.println("rank:" + pHand.getPokerHandRankType().toString());
-            System.out.println("");
+            System.out.print(rank);
+            System.out.print(" " + pHand.getPlayer().getName());
+            System.out.println(" " + pHand.getPokerHandRankType().toString());
+            rank++;
+
         }
 
     }

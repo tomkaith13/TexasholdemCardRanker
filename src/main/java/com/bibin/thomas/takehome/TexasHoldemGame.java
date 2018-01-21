@@ -72,7 +72,7 @@ public class TexasHoldemGame {
                 "S\t\t\tSpades\n" +
                 "D\t\t\tDiamonds\n" +
                 "C\t\t\tClubs\n\n" +
-                "Enter your data:\n";
+                "Enter your data:";
         System.out.println(greeting);
 
     }
