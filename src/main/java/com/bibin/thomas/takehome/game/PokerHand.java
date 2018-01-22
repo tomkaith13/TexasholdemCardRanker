@@ -21,7 +21,7 @@ public class PokerHand implements Comparable<PokerHand> {
     private CommunityDeck communityDeck;
     private Player player;
     private HandRank pokerHandRankType;
-    private Set<Card> handSet;
+    private Set<Card> totalHandSet;
     private boolean isValid = true;
 
     private int handRank = 0;
@@ -34,12 +34,12 @@ public class PokerHand implements Comparable<PokerHand> {
     public PokerHand(CommunityDeck communityDeck, Player player) {
         this.communityDeck = communityDeck;
         this.player = player;
-        handSet = new HashSet<>();
+        totalHandSet = new HashSet<>();
 
-        handSet.addAll(communityDeck.getCommunityCardSet());
-        handSet.addAll(player.getHand());
+        totalHandSet.addAll(communityDeck.getCommunityCardSet());
+        totalHandSet.addAll(player.getHand());
 
-        if (handSet.size() != 7) {
+        if (totalHandSet.size() != 7) {
             System.out.println("Error in Player:" + player.getName());
             System.out.println("Duplicates in community cards and player cards");
             isValid = false;
@@ -92,7 +92,7 @@ public class PokerHand implements Comparable<PokerHand> {
             //high card
             this.pokerHandRankType = HandRank.HIGH_CARD;
             this.handRank = GlobalMaps.handRankMap.get(HandRank.HIGH_CARD);
-            List<Card> handList = new ArrayList<>(handSet);
+            List<Card> handList = new ArrayList<>(totalHandSet);
             Collections.sort(handList);
             isHighCardFaceOnePresent = true;
             highCardFaceOne = handList.get(0).getFace();
@@ -104,7 +104,7 @@ public class PokerHand implements Comparable<PokerHand> {
 
     private boolean isOnePair() {
         for (CardFace cFace : CardFace.values()) {
-            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
+            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
                 highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
@@ -120,7 +120,7 @@ public class PokerHand implements Comparable<PokerHand> {
 
         for (CardFace cFace : CardFace.values()) {
             if (!onePairFound &&
-                    handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
+                    totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
                 onePairFound = true;
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
@@ -128,7 +128,7 @@ public class PokerHand implements Comparable<PokerHand> {
                 continue;
             }
 
-            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
+            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
 //                twoPairFound = true;
                 isHighCardFaceTwoPresent = true;
                 highCardFaceTwo = cFace;
@@ -151,7 +151,7 @@ public class PokerHand implements Comparable<PokerHand> {
 
     private boolean isThreeOfKind() {
         for (CardFace cFace : CardFace.values()) {
-            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3) {
+            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3) {
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
                 highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
@@ -162,7 +162,7 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
     private boolean isStraight() {
-        List<Card> handList = new ArrayList<>(handSet);
+        List<Card> handList = new ArrayList<>(totalHandSet);
         Collections.sort(handList);
 
         return detectFlushOrStraightFlushAndRank(handList);
@@ -170,8 +170,8 @@ public class PokerHand implements Comparable<PokerHand> {
 
     private boolean isFlush() {
         for (CardSuite cardSuite : CardSuite.values()) {
-            if (handSet.stream().filter(c -> c.getSuite().equals(cardSuite)).count() >= 5) {
-                List<Card> handList = new ArrayList<>(handSet);
+            if (totalHandSet.stream().filter(c -> c.getSuite().equals(cardSuite)).count() >= 5) {
+                List<Card> handList = new ArrayList<>(totalHandSet);
                 Collections.sort(handList);
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = handList.get(0).getFace();
@@ -186,7 +186,7 @@ public class PokerHand implements Comparable<PokerHand> {
 //        boolean tripleFound = false, pairFound = false;
 
         for (CardFace cFace : CardFace.values()) {
-            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3) {
+            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3) {
 //                tripleFound = true;
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
@@ -194,7 +194,7 @@ public class PokerHand implements Comparable<PokerHand> {
                 continue;
             }
 
-            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 2) {
+            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 2) {
 //                pairFound = true;
                 isHighCardFaceTwoPresent = true;
                 highCardFaceTwo = cFace;
@@ -206,7 +206,7 @@ public class PokerHand implements Comparable<PokerHand> {
 
     private boolean isFourOfKind() {
         for (CardFace cFace : CardFace.values()) {
-            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 4) {
+            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 4) {
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
                 highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
@@ -219,17 +219,17 @@ public class PokerHand implements Comparable<PokerHand> {
     private boolean isStraightFlush() {
         //create a list of all four suites
 
-        List<Card> clubsList = handSet.stream()
+        List<Card> clubsList = totalHandSet.stream()
                 .filter(c -> c.getSuite().equals(CardSuite.CLUBS))
                 .collect(Collectors.toList());
 
-        List<Card> diamondsList = handSet.stream()
+        List<Card> diamondsList = totalHandSet.stream()
                 .filter(c -> c.getSuite().equals(CardSuite.DIAMONDS))
                 .collect(Collectors.toList());
-        List<Card> heartsList = handSet.stream()
+        List<Card> heartsList = totalHandSet.stream()
                 .filter(c -> c.getSuite().equals(CardSuite.HEARTS))
                 .collect(Collectors.toList());
-        List<Card> spadesList = handSet.stream()
+        List<Card> spadesList = totalHandSet.stream()
                 .filter(c -> c.getSuite().equals(CardSuite.SPADES))
                 .collect(Collectors.toList());
 
@@ -282,28 +282,28 @@ public class PokerHand implements Comparable<PokerHand> {
     private boolean isRoyalFlush() {
         //check if all suits are the same
 
-        Iterator<Card> iter = handSet.iterator();
+        Iterator<Card> iter = totalHandSet.iterator();
 
-        List<Card> aceList = handSet.stream()
+        List<Card> aceList = totalHandSet.stream()
                 .filter(c -> c.getFace().equals(CardFace.ACE))
                 .collect(Collectors.toList());
 
         if (aceList.isEmpty())
             return false;
 
-        List<Card> kingList = handSet.stream()
+        List<Card> kingList = totalHandSet.stream()
                 .filter(c -> c.getFace().equals(CardFace.KING))
                 .collect(Collectors.toList());
 
-        List<Card> queenList = handSet.stream()
+        List<Card> queenList = totalHandSet.stream()
                 .filter(c -> c.getFace().equals(CardFace.QUEEN))
                 .collect(Collectors.toList());
 
-        List<Card> jackList = handSet.stream()
+        List<Card> jackList = totalHandSet.stream()
                 .filter(c -> c.getFace().equals(CardFace.JACK))
                 .collect(Collectors.toList());
 
-        List<Card> tenList = handSet.stream()
+        List<Card> tenList = totalHandSet.stream()
                 .filter(c -> c.getFace().equals(CardFace.TEN))
                 .collect(Collectors.toList());
 
