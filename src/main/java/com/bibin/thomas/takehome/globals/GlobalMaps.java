@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class GlobalMaps {
+    //disable instantiation
     private GlobalMaps() {
     }
     public static Map<Character, CardSuite> suiteMap;
