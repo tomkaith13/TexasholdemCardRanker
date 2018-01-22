@@ -276,13 +276,33 @@ public class PokerHandTest {
         Player player1 = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
         PokerHand pokerHand1 = new PokerHand(communityDeck, player1);
         assertTrue(pokerHand1.isValid());
-        assertEquals("Rank is not Four of a kind", HandRank.FULL_HOUSE, pokerHand1.getPokerHandRankType());
+        assertEquals("Rank is not Full House", HandRank.FULL_HOUSE, pokerHand1.getPokerHandRankType());
 
         Player player2 = new Player("Joe", new HashSet<>(Arrays.asList(new Card(CardFace.KING, CardSuite.HEARTS), new Card(CardFace.KING, CardSuite.DIAMONDS))));
         PokerHand pokerHand2 = new PokerHand(communityDeck, player2);
         assertTrue(pokerHand2.isValid());
-        assertEquals("Rank is not Four of a kind", HandRank.FULL_HOUSE, pokerHand2.getPokerHandRankType());
+        assertEquals("Rank is not Full House", HandRank.FULL_HOUSE, pokerHand2.getPokerHandRankType());
 
         assertTrue(pokerHand1.getHighCardRank() > pokerHand2.getHighCardRank());
     }
+
+    @Test
+    public void testStraightTieBreaker() {
+        CommunityDeck communityDeck = new CommunityDeck("8S 2D 3S 7C 6H");
+
+        Player player1 = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.FOUR, CardSuite.DIAMONDS), new Card(CardFace.FIVE, CardSuite.HEARTS))));
+        PokerHand pokerHand1 = new PokerHand(communityDeck, player1);
+        assertTrue(pokerHand1.isValid());
+        assertEquals("Rank is not Straight", HandRank.STRAIGHT, pokerHand1.getPokerHandRankType());
+
+        Player player2 = new Player("Joe", new HashSet<>(Arrays.asList(new Card(CardFace.FIVE, CardSuite.SPADES), new Card(CardFace.NINE, CardSuite.HEARTS))));
+        PokerHand pokerHand2 = new PokerHand(communityDeck, player2);
+        assertTrue(pokerHand2.isValid());
+        assertEquals("Rank is not Straight", HandRank.STRAIGHT, pokerHand2.getPokerHandRankType());
+
+        assertTrue(pokerHand1.getHighCardRank() > pokerHand2.getHighCardRank());
+
+    }
+
+
 }
