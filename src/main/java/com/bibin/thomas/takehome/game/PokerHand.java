@@ -10,13 +10,23 @@ import com.bibin.thomas.takehome.globals.GlobalMaps;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/*
+    The class stores the community deck and the player input
+    and verifies if they have 7 cards in the set.
+
+    Each hand is finally stored in a list and must be comparable
+    to create the ranking.
+ */
 public class PokerHand implements Comparable<PokerHand> {
     private CommunityDeck communityDeck;
     private Player player;
     private HandRank pokerHandRankType;
     private Set<Card> handSet;
     private boolean isValid = true;
-    private int rank = 0;
+
+    private int handRank = 0;
+    private CardFace highCardFace;
+    private int highCardRank;
 
     public PokerHand(CommunityDeck communityDeck, Player player) {
         this.communityDeck = communityDeck;
@@ -41,52 +51,56 @@ public class PokerHand implements Comparable<PokerHand> {
 
         if (isRoyalFlush()) {
             this.pokerHandRankType = HandRank.ROYAL_FLUSH;
-            this.rank = GlobalMaps.handRankMap.get(HandRank.ROYAL_FLUSH);
+            this.handRank = GlobalMaps.handRankMap.get(HandRank.ROYAL_FLUSH);
 
         } else if (isStraightFlush()) {
             this.pokerHandRankType = HandRank.STRAIGHT_FLUSH;
-            this.rank = GlobalMaps.handRankMap.get(HandRank.STRAIGHT_FLUSH);
+            this.handRank = GlobalMaps.handRankMap.get(HandRank.STRAIGHT_FLUSH);
 
         } else if (isFourOfKind()) {
             this.pokerHandRankType = HandRank.FOUR_OF_KIND;
-            this.rank = GlobalMaps.handRankMap.get(HandRank.FOUR_OF_KIND);
+            this.handRank = GlobalMaps.handRankMap.get(HandRank.FOUR_OF_KIND);
 
         } else if (isFullHouse()) {
             this.pokerHandRankType = HandRank.FULL_HOUSE;
-            this.rank = GlobalMaps.handRankMap.get(HandRank.FULL_HOUSE);
+            this.handRank = GlobalMaps.handRankMap.get(HandRank.FULL_HOUSE);
 
         } else if (isFlush()) {
             this.pokerHandRankType = HandRank.FLUSH;
-            this.rank = GlobalMaps.handRankMap.get(HandRank.FLUSH);
+            this.handRank = GlobalMaps.handRankMap.get(HandRank.FLUSH);
 
         } else if (isStraight()) {
             this.pokerHandRankType = HandRank.STRAIGHT;
-            this.rank = GlobalMaps.handRankMap.get(HandRank.STRAIGHT);
+            this.handRank = GlobalMaps.handRankMap.get(HandRank.STRAIGHT);
 
         } else if (isThreeOfKind()) {
             this.pokerHandRankType = HandRank.THREE_OF_KIND;
-            this.rank = GlobalMaps.handRankMap.get(HandRank.THREE_OF_KIND);
+            this.handRank = GlobalMaps.handRankMap.get(HandRank.THREE_OF_KIND);
 
         } else if (isTwoPair()) {
             this.pokerHandRankType = HandRank.TWO_PAIR;
-            this.rank = GlobalMaps.handRankMap.get(HandRank.TWO_PAIR);
+            this.handRank = GlobalMaps.handRankMap.get(HandRank.TWO_PAIR);
 
         } else if (isOnePair()) {
             this.pokerHandRankType = HandRank.ONE_PAIR;
-            this.rank = GlobalMaps.handRankMap.get(HandRank.ONE_PAIR);
+            this.handRank = GlobalMaps.handRankMap.get(HandRank.ONE_PAIR);
 
         } else {
             //high card
             this.pokerHandRankType = HandRank.HIGH_CARD;
-            this.rank = GlobalMaps.handRankMap.get(HandRank.HIGH_CARD);
+            this.handRank = GlobalMaps.handRankMap.get(HandRank.HIGH_CARD);
         }
 
     }
 
     private boolean isOnePair() {
         for (CardFace cFace : CardFace.values()) {
-            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2)
+            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
+                highCardFace = cFace;
+                highCardRank = GlobalMaps.faceRankMap.get(highCardFace);
+
                 return true;
+            }
         }
         return false;
     }
@@ -254,7 +268,11 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
     public int compareTo(PokerHand o) {
-        return Integer.compare(rank, o.rank);
+        if (handRank != o.handRank)
+            return Integer.compare(handRank, o.handRank);
+        else
+            return Integer.compare(highCardRank, o.highCardRank);
+
     }
 
     public HandRank getPokerHandRankType() {
@@ -282,5 +300,10 @@ public class PokerHand implements Comparable<PokerHand> {
 
     public Player getPlayer() {
         return player;
+    }
+
+
+    public CardFace getHighCardFace() {
+        return highCardFace;
     }
 }

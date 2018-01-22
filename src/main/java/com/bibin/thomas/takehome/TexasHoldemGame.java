@@ -14,23 +14,32 @@ import java.util.Set;
  * Main game class which handles stdout and stdin
  */
 public class TexasHoldemGame {
+    //user to store the community cards
     private static CommunityDeck communityDeck;
+
+    //used to store the player info and cards
     private static Set<Player> playerSet = new HashSet<>();
+
+    // the actual game ranker which takes communityDec and playerSet info
+    // and ranks the cards
     private static GameRanker gameRanker;
 
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+        boolean badInput = false;
 
-        //linecount can be used to give data about valid vs invalid data
+        //linecount used to differetiate community deck vs player hand
         int lineCount = 0;
+
         displayStartMessage();
         while (input.hasNextLine()) {
             if (lineCount == 0) {
                 communityDeck = new CommunityDeck(input.nextLine());
 
-                if (communityDeck.isValid() == false) {
+                if (!communityDeck.isValid()) {
                     System.out.println("Invalid Community deck. Please enter valid deck");
+                    badInput = true;
                     break;
                 }
 
@@ -40,7 +49,8 @@ public class TexasHoldemGame {
                 //Only valid player data is considered
                 if (!pcValidator.isValid()) {
                     System.out.println("Invalid Player data.");
-                    continue;
+                    badInput = true;
+                    break;
                 }
 
                 Player p = new Player(pcValidator.getPlayerName(), pcValidator.getValidCardSet());
@@ -49,8 +59,12 @@ public class TexasHoldemGame {
             lineCount++;
         } //end while
 
-        gameRanker = new GameRanker(communityDeck, playerSet);
-        gameRanker.displaySortedPlayerHand();
+        if (!badInput) {
+            gameRanker = new GameRanker(communityDeck, playerSet);
+            gameRanker.displaySortedPlayerHand();
+            return;
+        }
+        System.out.println("Bad input found... Please try again!!");
     }
 
     private static void displayStartMessage() {
