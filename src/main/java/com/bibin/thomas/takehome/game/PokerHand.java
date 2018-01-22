@@ -92,6 +92,12 @@ public class PokerHand implements Comparable<PokerHand> {
             //high card
             this.pokerHandRankType = HandRank.HIGH_CARD;
             this.handRank = GlobalMaps.handRankMap.get(HandRank.HIGH_CARD);
+            List<Card> handList = new ArrayList<>(handSet);
+            Collections.sort(handList);
+            isHighCardFaceOnePresent = true;
+            highCardFaceOne = handList.get(0).getFace();
+            highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+
         }
 
     }
@@ -110,7 +116,7 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
     private boolean isTwoPair() {
-        boolean onePairFound = false, twoPairFound = false;
+        boolean onePairFound = false;
 
         for (CardFace cFace : CardFace.values()) {
             if (!onePairFound &&
@@ -123,55 +129,89 @@ public class PokerHand implements Comparable<PokerHand> {
             }
 
             if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
-                twoPairFound = true;
+//                twoPairFound = true;
                 isHighCardFaceTwoPresent = true;
                 highCardFaceTwo = cFace;
                 highCardRank += GlobalMaps.faceRankMap.get(highCardFaceTwo);
             }
         }
-        return onePairFound && twoPairFound;
+
+        return checkIfBothHighCardPresentElseReset();
+    }
+
+    private boolean checkIfBothHighCardPresentElseReset() {
+        if (isHighCardFaceOnePresent && isHighCardFaceTwoPresent)
+            return true;
+        else {
+            isHighCardFaceOnePresent = false;
+            isHighCardFaceTwoPresent = false;
+            return false;
+        }
     }
 
     private boolean isThreeOfKind() {
         for (CardFace cFace : CardFace.values()) {
-            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3)
+            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3) {
+                isHighCardFaceOnePresent = true;
+                highCardFaceOne = cFace;
+                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
                 return true;
+            }
         }
         return false;
     }
 
     private boolean isStraight() {
-        return foundIncreasingCardSequence(new ArrayList<>(handSet));
+        List<Card> handList = new ArrayList<>(handSet);
+        Collections.sort(handList);
+
+        return detectFlushOrStraightFlushAndRank(handList);
     }
 
     private boolean isFlush() {
         for (CardSuite cardSuite : CardSuite.values()) {
-            if (handSet.stream().filter(c -> c.getSuite().equals(cardSuite)).count() == 5)
+            if (handSet.stream().filter(c -> c.getSuite().equals(cardSuite)).count() == 5) {
+                List<Card> handList = new ArrayList<>(handSet);
+                Collections.sort(handList);
+                isHighCardFaceOnePresent = true;
+                highCardFaceOne = handList.get(0).getFace();
+                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
                 return true;
+            }
         }
         return false;
     }
 
     private boolean isFullHouse() {
-        boolean tripleFound = false, pairFound = false;
+//        boolean tripleFound = false, pairFound = false;
 
         for (CardFace cFace : CardFace.values()) {
             if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3) {
-                tripleFound = true;
+//                tripleFound = true;
+                isHighCardFaceOnePresent = true;
+                highCardFaceOne = cFace;
+                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceOne);
                 continue;
             }
 
             if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 2) {
-                pairFound = true;
+//                pairFound = true;
+                isHighCardFaceTwoPresent = true;
+                highCardFaceTwo = cFace;
+                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceTwo);
             }
         }
-        return tripleFound && pairFound;
+        return checkIfBothHighCardPresentElseReset();
     }
 
     private boolean isFourOfKind() {
         for (CardFace cFace : CardFace.values()) {
-            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 4)
+            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 4) {
+                isHighCardFaceOnePresent = true;
+                highCardFaceOne = cFace;
+                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
                 return true;
+            }
         }
         return false;
     }
@@ -200,23 +240,31 @@ public class PokerHand implements Comparable<PokerHand> {
             return false;
 
         if (clubsList.size() >= 5) {
-            if (foundIncreasingCardSequence(clubsList))
-                return true;
+            return detectFlushOrStraightFlushAndRank(clubsList);
         } else if (diamondsList.size() >= 5) {
-            if (foundIncreasingCardSequence(diamondsList))
-                return true;
+            return detectFlushOrStraightFlushAndRank(diamondsList);
         }
         if (heartsList.size() >= 5) {
-            return foundIncreasingCardSequence(heartsList);
-        } else if (spadesList.size() >= 5) {
-            return foundIncreasingCardSequence(spadesList);
+            return detectFlushOrStraightFlushAndRank(heartsList);
+        } else {
+            return detectFlushOrStraightFlushAndRank(spadesList);
         }
 
+    }
+
+    private boolean detectFlushOrStraightFlushAndRank(List<Card> cardList) {
+        Collections.sort(cardList);
+        if (foundIncreasingCardSequence(cardList)) {
+            isHighCardFaceOnePresent = true;
+            highCardFaceOne = cardList.get(0).getFace();
+            highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+            return true;
+        }
         return false;
     }
 
     private boolean foundIncreasingCardSequence(List<Card> cardList) {
-        Collections.sort(cardList);
+//        Collections.sort(cardList);
 
         for (int i = 0; i <= cardList.size() - 5; i++) {
             List<Card> subList = cardList.subList(i, i + 5);
