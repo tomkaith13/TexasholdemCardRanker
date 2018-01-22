@@ -25,8 +25,10 @@ public class PokerHand implements Comparable<PokerHand> {
     private boolean isValid = true;
 
     private int handRank = 0;
-    private boolean isHighCardFacePresent = false;
-    private CardFace highCardFace;
+    private boolean isHighCardFaceOnePresent = false;
+    private boolean isHighCardFaceTwoPresent = false;
+    private CardFace highCardFaceOne;
+    private CardFace highCardFaceTwo;
     private int highCardRank;
 
     public PokerHand(CommunityDeck communityDeck, Player player) {
@@ -97,9 +99,9 @@ public class PokerHand implements Comparable<PokerHand> {
     private boolean isOnePair() {
         for (CardFace cFace : CardFace.values()) {
             if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
-                isHighCardFacePresent = true;
-                highCardFace = cFace;
-                highCardRank = GlobalMaps.faceRankMap.get(highCardFace);
+                isHighCardFaceOnePresent = true;
+                highCardFaceOne = cFace;
+                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
 
                 return true;
             }
@@ -114,11 +116,17 @@ public class PokerHand implements Comparable<PokerHand> {
             if (!onePairFound &&
                     handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
                 onePairFound = true;
+                isHighCardFaceOnePresent = true;
+                highCardFaceOne = cFace;
+                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceOne);
                 continue;
             }
 
             if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
                 twoPairFound = true;
+                isHighCardFaceTwoPresent = true;
+                highCardFaceTwo = cFace;
+                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceTwo);
             }
         }
         return onePairFound && twoPairFound;
@@ -305,11 +313,19 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
 
-    public CardFace getHighCardFace() {
-        return highCardFace;
+    public CardFace getHighCardFaceOne() {
+        return highCardFaceOne;
     }
 
-    public boolean isHighCardFacePresent() {
-        return this.isHighCardFacePresent;
+    public CardFace getHighCardFaceTwo() {
+        return highCardFaceTwo;
+    }
+
+    public boolean isHighCardFaceOnePresent() {
+        return this.isHighCardFaceOnePresent;
+    }
+
+    public boolean isHighCardFaceTwoPresent() {
+        return this.isHighCardFaceTwoPresent;
     }
 }

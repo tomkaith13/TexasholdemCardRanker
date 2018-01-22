@@ -31,8 +31,10 @@ public class GameRanker {
             System.out.print(rank);
             System.out.print(" " + pHand.getPlayer().getName());
             System.out.print(" " + pHand.getPokerHandRankType().toString());
-            if (pHand.isHighCardFacePresent())
-                System.out.println(" " + pHand.getHighCardFace());
+            if (pHand.isHighCardFaceOnePresent() && pHand.isHighCardFaceTwoPresent())
+                System.out.println(" " + pHand.getHighCardFaceOne() + " " + pHand.getHighCardFaceTwo());
+            else if (pHand.isHighCardFaceOnePresent())
+                System.out.println(" " + pHand.getHighCardFaceOne());
             else
                 System.out.println("");
 
