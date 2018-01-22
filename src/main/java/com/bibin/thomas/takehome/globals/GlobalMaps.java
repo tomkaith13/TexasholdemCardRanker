@@ -7,20 +7,22 @@ import com.bibin.thomas.takehome.game.HandRank;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GlobalMaps {
+public final class GlobalMaps {
+    private GlobalMaps() {
+    }
     public static Map<Character, CardSuite> suiteMap;
     public static Map<Character, CardFace> faceMap;
     public static Map<CardFace, Integer> faceRankMap;
     public static Map<HandRank, Integer> handRankMap;
 
     static {
-        suiteMap = new HashMap<Character, CardSuite>();
+        suiteMap = new HashMap<>();
         suiteMap.put('H', CardSuite.HEARTS);
         suiteMap.put('D', CardSuite.DIAMONDS);
         suiteMap.put('S', CardSuite.SPADES);
         suiteMap.put('C', CardSuite.CLUBS);
 
-        faceMap = new HashMap<Character, CardFace>();
+        faceMap = new HashMap<>();
         faceMap.put('2', CardFace.TWO);
         faceMap.put('3', CardFace.THREE);
         faceMap.put('4', CardFace.FOUR);
@@ -35,7 +37,7 @@ public class GlobalMaps {
         faceMap.put('K', CardFace.KING);
         faceMap.put('A', CardFace.ACE);
 
-        faceRankMap = new HashMap<CardFace, Integer>();
+        faceRankMap = new HashMap<>();
         faceRankMap.put(CardFace.ACE, 0);
         faceRankMap.put(CardFace.KING, 1);
         faceRankMap.put(CardFace.QUEEN, 2);
@@ -50,7 +52,7 @@ public class GlobalMaps {
         faceRankMap.put(CardFace.THREE, 11);
         faceRankMap.put(CardFace.TWO, 12);
 
-        handRankMap = new HashMap<HandRank, Integer>();
+        handRankMap = new HashMap<>();
         handRankMap.put(HandRank.ROYAL_FLUSH, 0);
         handRankMap.put(HandRank.STRAIGHT_FLUSH, 1);
         handRankMap.put(HandRank.FOUR_OF_KIND, 2);

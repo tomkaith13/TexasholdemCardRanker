@@ -23,7 +23,7 @@ public class GameRanker {
     }
 
     // function for displayng ranking
-    public void displaySortedPlayerHand() {
+    public void displayPlayerHandRankings() {
         System.out.println("==========================================");
         System.out.println("Player Rankings:");
         int rank = 1;

@@ -5,7 +5,6 @@ import com.bibin.thomas.takehome.deck.CommunityDeck;
 import com.bibin.thomas.takehome.game.GameRanker;
 import com.bibin.thomas.takehome.user.validation.PlayerCardValidator;
 
-import java.io.BufferedReader;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -29,7 +28,7 @@ public class TexasHoldemGame {
         Scanner input = new Scanner(System.in);
         boolean badInput = false;
 
-        //linecount used to differetiate community deck vs player hand
+        //linecount used to differentiate community deck vs player hand
         int lineCount = 0;
 
         displayStartMessage();
@@ -42,7 +41,6 @@ public class TexasHoldemGame {
                     badInput = true;
                     break;
                 }
-
             } else {
                 PlayerCardValidator pcValidator = new PlayerCardValidator(input.nextLine());
 
@@ -52,7 +50,6 @@ public class TexasHoldemGame {
                     badInput = true;
                     break;
                 }
-
                 Player p = new Player(pcValidator.getPlayerName(), pcValidator.getValidCardSet());
                 playerSet.add(p);
             }
@@ -61,7 +58,7 @@ public class TexasHoldemGame {
 
         if (!badInput) {
             gameRanker = new GameRanker(communityDeck, playerSet);
-            gameRanker.displaySortedPlayerHand();
+            gameRanker.displayPlayerHandRankings();
             return;
         }
         System.out.println("Bad input found... Please try again!!");

@@ -8,7 +8,7 @@ import java.util.Set;
 public class CommunityDeck {
     private String inputString;
     private Set<Card> communityCardSet;
-    private boolean isValid = true;
+    private boolean isValid;
 
     public CommunityDeck(String userInput) {
         this.inputString = userInput;
