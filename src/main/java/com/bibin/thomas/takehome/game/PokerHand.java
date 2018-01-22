@@ -170,7 +170,7 @@ public class PokerHand implements Comparable<PokerHand> {
 
     private boolean isFlush() {
         for (CardSuite cardSuite : CardSuite.values()) {
-            if (handSet.stream().filter(c -> c.getSuite().equals(cardSuite)).count() == 5) {
+            if (handSet.stream().filter(c -> c.getSuite().equals(cardSuite)).count() >= 5) {
                 List<Card> handList = new ArrayList<>(handSet);
                 Collections.sort(handList);
                 isHighCardFaceOnePresent = true;
@@ -206,7 +206,7 @@ public class PokerHand implements Comparable<PokerHand> {
 
     private boolean isFourOfKind() {
         for (CardFace cFace : CardFace.values()) {
-            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 4) {
+            if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 4) {
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
                 highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
@@ -258,8 +258,6 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
     private boolean foundIncreasingCardSequence(List<Card> cardList) {
-//        Collections.sort(cardList);
-
         for (int i = 0; i <= cardList.size() - 5; i++) {
             List<Card> subList = cardList.subList(i, i + 5);
 
@@ -279,6 +277,7 @@ public class PokerHand implements Comparable<PokerHand> {
         }
         return false;
     }
+
 
     private boolean isRoyalFlush() {
         //check if all suits are the same

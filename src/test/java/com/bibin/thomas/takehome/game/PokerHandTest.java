@@ -304,5 +304,23 @@ public class PokerHandTest {
 
     }
 
+    @Test
+    public void testFlushTieBreaker() {
+        CommunityDeck communityDeck = new CommunityDeck("5S 2D 2S JS KS");
+
+        Player player1 = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.FOUR, CardSuite.SPADES), new Card(CardFace.SEVEN, CardSuite.SPADES))));
+        PokerHand pokerHand1 = new PokerHand(communityDeck, player1);
+        assertTrue(pokerHand1.isValid());
+        assertEquals("Rank is not Flush", HandRank.FLUSH, pokerHand1.getPokerHandRankType());
+
+        Player player2 = new Player("Joe", new HashSet<>(Arrays.asList(new Card(CardFace.THREE, CardSuite.SPADES), new Card(CardFace.ACE, CardSuite.SPADES))));
+        PokerHand pokerHand2 = new PokerHand(communityDeck, player2);
+        assertTrue(pokerHand2.isValid());
+        assertEquals("Rank is not Flush", HandRank.FLUSH, pokerHand2.getPokerHandRankType());
+
+        assertTrue(pokerHand1.getHighCardRank() > pokerHand2.getHighCardRank());
+
+    }
+
 
 }
