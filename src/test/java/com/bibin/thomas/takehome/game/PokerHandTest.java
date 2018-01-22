@@ -236,5 +236,23 @@ public class PokerHandTest {
         assertEquals("high card is not ten:", CardFace.KING, pokerHand.getHighCardFaceOne());
     }
 
+    @Test
+    public void testStraightFlushTieBreaker() {
+        CommunityDeck communityDeck = new CommunityDeck("8S 2D 3S 7S 6S");
+
+        Player player1 = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.FOUR, CardSuite.SPADES), new Card(CardFace.FIVE, CardSuite.SPADES))));
+        PokerHand pokerHand1 = new PokerHand(communityDeck, player1);
+        assertTrue(pokerHand1.isValid());
+        assertEquals("Rank is not Straight Flush", HandRank.STRAIGHT_FLUSH, pokerHand1.getPokerHandRankType());
+
+        Player player2 = new Player("Joe", new HashSet<>(Arrays.asList(new Card(CardFace.FIVE, CardSuite.SPADES), new Card(CardFace.NINE, CardSuite.SPADES))));
+        PokerHand pokerHand2 = new PokerHand(communityDeck, player2);
+        assertTrue(pokerHand2.isValid());
+        assertEquals("Rank is not Straight Flush", HandRank.STRAIGHT_FLUSH, pokerHand2.getPokerHandRankType());
+
+        assertTrue(pokerHand1.getHighCardRank() > pokerHand2.getHighCardRank());
+
+    }
+
 
 }

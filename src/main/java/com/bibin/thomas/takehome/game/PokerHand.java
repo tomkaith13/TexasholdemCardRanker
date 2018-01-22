@@ -254,13 +254,7 @@ public class PokerHand implements Comparable<PokerHand> {
 
     private boolean detectFlushOrStraightFlushAndRank(List<Card> cardList) {
         Collections.sort(cardList);
-        if (foundIncreasingCardSequence(cardList)) {
-            isHighCardFaceOnePresent = true;
-            highCardFaceOne = cardList.get(0).getFace();
-            highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
-            return true;
-        }
-        return false;
+        return foundIncreasingCardSequence(cardList);
     }
 
     private boolean foundIncreasingCardSequence(List<Card> cardList) {
@@ -276,8 +270,12 @@ public class PokerHand implements Comparable<PokerHand> {
 
             int apSum = (5 * ((2 * firstCardRank) + 4)) / 2;
 
-            if (sum == apSum)
+            if (sum == apSum) {
+                isHighCardFaceOnePresent = true;
+                highCardFaceOne = cardList.get(i).getFace();
+                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
                 return true;
+            }
         }
         return false;
     }
@@ -376,4 +374,10 @@ public class PokerHand implements Comparable<PokerHand> {
     public boolean isHighCardFaceTwoPresent() {
         return this.isHighCardFaceTwoPresent;
     }
+
+    public int getHighCardRank() {
+        return highCardRank;
+    }
+
+
 }
