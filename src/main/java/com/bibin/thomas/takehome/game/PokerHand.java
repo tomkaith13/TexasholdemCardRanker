@@ -92,7 +92,7 @@ public class PokerHand implements Comparable<PokerHand> {
             //high card
             this.pokerHandRankType = HandRank.HIGH_CARD;
             this.handRank = GlobalMaps.handRankMap.get(HandRank.HIGH_CARD);
-            List<Card> handList = new ArrayList<>(totalHandSet);
+            List<Card> handList = new ArrayList<>(player.getHand());
             Collections.sort(handList);
             isHighCardFaceOnePresent = true;
             highCardFaceOne = handList.get(0).getFace();
