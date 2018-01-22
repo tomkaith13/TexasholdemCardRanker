@@ -47,7 +47,7 @@ result in immediate termination of the program.
 Once the user enters the valid community cards, the program starts accepting and validating user cards.
 Once user cards are parsed and validated, the program moves to creating the rankings.
 
-Two Players with the same name cannot exist.
+Two Players with the same name AND same hand cannot exist.
 
 During the ranking phase, the program discards any generatable pokerHand which does not have 7 valid cards
 (5 from Community Deck and 2 frm each User). If the user and community have duplicate cards, the User is ignored and
