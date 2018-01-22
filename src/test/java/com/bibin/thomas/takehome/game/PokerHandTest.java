@@ -254,5 +254,21 @@ public class PokerHandTest {
 
     }
 
+    @Test
+    public void testFourKindTieBreaker() {
+        CommunityDeck communityDeck = new CommunityDeck("TS 6D 6S 7C TC");
+        Player player1 = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.TEN, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand1 = new PokerHand(communityDeck, player1);
+        assertTrue(pokerHand1.isValid());
+        assertEquals("Rank is not Four of a kind", HandRank.FOUR_OF_KIND, pokerHand1.getPokerHandRankType());
+
+        Player player2 = new Player("Joe", new HashSet<>(Arrays.asList(new Card(CardFace.SIX, CardSuite.HEARTS), new Card(CardFace.SIX, CardSuite.CLUBS))));
+        PokerHand pokerHand2 = new PokerHand(communityDeck, player2);
+        assertTrue(pokerHand2.isValid());
+        assertEquals("Rank is not Four of a kind", HandRank.FOUR_OF_KIND, pokerHand2.getPokerHandRankType());
+
+        assertTrue(pokerHand1.getHighCardRank() < pokerHand2.getHighCardRank());
+    }
+
 
 }
