@@ -25,6 +25,7 @@ public class PokerHand implements Comparable<PokerHand> {
     private boolean isValid = true;
 
     private int handRank = 0;
+    private boolean isHighCardFacePresent = false;
     private CardFace highCardFace;
     private int highCardRank;
 
@@ -96,6 +97,7 @@ public class PokerHand implements Comparable<PokerHand> {
     private boolean isOnePair() {
         for (CardFace cFace : CardFace.values()) {
             if (handSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
+                isHighCardFacePresent = true;
                 highCardFace = cFace;
                 highCardRank = GlobalMaps.faceRankMap.get(highCardFace);
 
@@ -305,5 +307,9 @@ public class PokerHand implements Comparable<PokerHand> {
 
     public CardFace getHighCardFace() {
         return highCardFace;
+    }
+
+    public boolean isHighCardFacePresent() {
+        return this.isHighCardFacePresent;
     }
 }

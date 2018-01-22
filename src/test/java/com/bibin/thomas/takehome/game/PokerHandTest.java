@@ -200,6 +200,7 @@ public class PokerHandTest {
 
         assertTrue(pokerHand.isValid());
         assertEquals("Rank is not One Pair", HandRank.ONE_PAIR, pokerHand.getPokerHandRankType());
+        assertEquals("high card is not ten:", CardFace.TEN, pokerHand.getHighCardFace());
     }
 
     @Test
@@ -210,6 +211,7 @@ public class PokerHandTest {
 
         assertTrue(pokerHand.isValid());
         assertNotEquals("Rank is One Pair", HandRank.ONE_PAIR, pokerHand.getPokerHandRankType());
+        assertNotEquals("high card is ten:", CardFace.TEN, pokerHand.getHighCardFace());
     }
 
 
