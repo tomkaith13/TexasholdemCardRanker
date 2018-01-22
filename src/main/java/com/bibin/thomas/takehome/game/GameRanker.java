@@ -53,6 +53,7 @@ public class GameRanker {
                 playerHandList.add(pHand);
             } else {
                 System.out.println("Invalid poker hand.. Ignoring player input");
+
             }
         }
 
