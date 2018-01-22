@@ -74,22 +74,45 @@ This Object taking in the CommunityDeck and playerSet to sort each player hand i
 
 
  ========= Tried Test Samples =============
+ Input:
  KS AD 3H 7C TD
  John 9H 7S
  Sam AC KH
  Becky JD QC
 
+ Output:
+Player Rankings:
+1 Becky STRAIGHT ACE
+2 Sam TWO_PAIR KING ACE
+3 John ONE_PAIR SEVEN
+
+
+Input:
 TS 6D 6S 7C TC
 John TH TD
 Joe 6H  6C
 
+Output:
+Player Rankings:
+1 John FOUR_OF_KIND TEN
+2 Joe FOUR_OF_KIND SIX
+
+
+Input:
 TS 6D 6S 7C TC
 John TH TD
 Joe 6H  6C
 Jack AH AD
 Jill 2C 2H
 
-KS AD 3H 7C TD
-John 9H 7S
-John AC KH
+Output:
+Player Rankings:
+1 John FOUR_OF_KIND TEN
+2 Joe FOUR_OF_KIND SIX
+3 Jack TWO_PAIR SIX ACE
+4 Jill TWO_PAIR TWO TEN
+
+
+
+
 
