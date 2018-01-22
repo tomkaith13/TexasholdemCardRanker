@@ -215,7 +215,7 @@ public class PokerHandTest {
     }
 
     @Test
-    public void testHighCard() {
+    public void testHighCardAce() {
         CommunityDeck communityDeck = new CommunityDeck("7S 4D 3S 6C 9C");
         Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.ACE, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
         PokerHand pokerHand = new PokerHand(communityDeck, player);
@@ -223,6 +223,17 @@ public class PokerHandTest {
         assertTrue(pokerHand.isValid());
         assertEquals("Rank is not One Pair", HandRank.HIGH_CARD, pokerHand.getPokerHandRankType());
         assertEquals("high card is not ten:", CardFace.ACE, pokerHand.getHighCardFaceOne());
+    }
+
+    @Test
+    public void testHighCardKing() {
+        CommunityDeck communityDeck = new CommunityDeck("7S 4D 3S 6C 9C");
+        Player player = new Player("John", new HashSet<>(Arrays.asList(new Card(CardFace.KING, CardSuite.HEARTS), new Card(CardFace.TEN, CardSuite.DIAMONDS))));
+        PokerHand pokerHand = new PokerHand(communityDeck, player);
+
+        assertTrue(pokerHand.isValid());
+        assertEquals("Rank is not One Pair", HandRank.HIGH_CARD, pokerHand.getPokerHandRankType());
+        assertEquals("high card is not ten:", CardFace.KING, pokerHand.getHighCardFaceOne());
     }
 
 
