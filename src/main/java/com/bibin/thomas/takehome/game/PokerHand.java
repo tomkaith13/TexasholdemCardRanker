@@ -22,6 +22,7 @@ public class PokerHand implements Comparable<PokerHand> {
     private Player player;
     private HandRank pokerHandRankType;
     private Set<Card> totalHandSet;
+    private Set<Card> rankedSet;
     private boolean isValid = true;
 
     private int handRank = 0;
@@ -105,9 +106,11 @@ public class PokerHand implements Comparable<PokerHand> {
     private boolean isOnePair() {
         for (CardFace cFace : CardFace.values()) {
             if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
+                rankedSet = totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).collect(Collectors.toSet());
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
-                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+//                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+                highCardRank = totalHandSet.stream().mapToInt(Card::getFaceRank).sum();
 
                 return true;
             }
@@ -117,22 +120,31 @@ public class PokerHand implements Comparable<PokerHand> {
 
     private boolean isTwoPair() {
         boolean onePairFound = false;
+        rankedSet = new TreeSet<>();
 
         for (CardFace cFace : CardFace.values()) {
             if (!onePairFound &&
-                    totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
+                    totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 2) {
+                rankedSet.addAll(totalHandSet.stream()
+                        .filter(c -> c.getFace().equals(cFace))
+                        .collect(Collectors.toSet()));
                 onePairFound = true;
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
-                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceOne);
+//                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceOne);
+//                highCardRank += rankedSet.stream().mapToInt(Card::getFaceRank).sum();
                 continue;
             }
 
-            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 2) {
+            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 2) {
 //                twoPairFound = true;
+                rankedSet.addAll(totalHandSet.stream()
+                        .filter(c -> c.getFace().equals(cFace))
+                        .collect(Collectors.toSet()));
                 isHighCardFaceTwoPresent = true;
                 highCardFaceTwo = cFace;
-                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceTwo);
+//                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceTwo);
+                highCardRank = totalHandSet.stream().mapToInt(Card::getFaceRank).sum();
             }
         }
 
@@ -145,16 +157,19 @@ public class PokerHand implements Comparable<PokerHand> {
         else {
             isHighCardFaceOnePresent = false;
             isHighCardFaceTwoPresent = false;
+            highCardRank = 0;
             return false;
         }
     }
 
     private boolean isThreeOfKind() {
         for (CardFace cFace : CardFace.values()) {
-            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3) {
+            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 3) {
+                rankedSet = totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).collect(Collectors.toSet());
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
-                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+//                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+                highCardRank = totalHandSet.stream().mapToInt(Card::getFaceRank).sum();
                 return true;
             }
         }
@@ -171,11 +186,15 @@ public class PokerHand implements Comparable<PokerHand> {
     private boolean isFlush() {
         for (CardSuite cardSuite : CardSuite.values()) {
             if (totalHandSet.stream().filter(c -> c.getSuite().equals(cardSuite)).count() >= 5) {
-                List<Card> handList = new ArrayList<>(totalHandSet);
+                rankedSet = totalHandSet.stream()
+                        .filter(c -> c.getSuite().equals(cardSuite))
+                        .collect(Collectors.toSet());
+                List<Card> handList = new ArrayList<>(rankedSet);
                 Collections.sort(handList);
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = handList.get(0).getFace();
-                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+//                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+                highCardRank = totalHandSet.stream().mapToInt(Card::getFaceRank).sum();
                 return true;
             }
         }
@@ -183,22 +202,24 @@ public class PokerHand implements Comparable<PokerHand> {
     }
 
     private boolean isFullHouse() {
-//        boolean tripleFound = false, pairFound = false;
+        rankedSet = new TreeSet<>();
 
         for (CardFace cFace : CardFace.values()) {
-            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() == 3) {
-//                tripleFound = true;
+            if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 3) {
+                rankedSet.addAll(totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).collect(Collectors.toSet()));
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
-                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceOne);
+//                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceOne);
+//                highCardRank += rankedSet.stream().mapToInt(Card::getFaceRank).sum();
                 continue;
             }
 
             if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 2) {
-//                pairFound = true;
+                rankedSet.addAll(totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).collect(Collectors.toSet()));
                 isHighCardFaceTwoPresent = true;
                 highCardFaceTwo = cFace;
-                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceTwo);
+//                highCardRank += GlobalMaps.faceRankMap.get(highCardFaceTwo);
+                highCardRank = totalHandSet.stream().mapToInt(Card::getFaceRank).sum();
             }
         }
         return checkIfBothHighCardPresentElseReset();
@@ -207,9 +228,13 @@ public class PokerHand implements Comparable<PokerHand> {
     private boolean isFourOfKind() {
         for (CardFace cFace : CardFace.values()) {
             if (totalHandSet.stream().filter(c -> c.getFace().equals(cFace)).count() >= 4) {
+                rankedSet = totalHandSet.stream()
+                        .filter(c -> c.getFace().equals(cFace))
+                        .collect(Collectors.toSet());
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cFace;
-                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+//                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+                highCardRank = totalHandSet.stream().mapToInt(Card::getFaceRank).sum();
                 return true;
             }
         }
@@ -269,9 +294,11 @@ public class PokerHand implements Comparable<PokerHand> {
             int apSum = (5 * ((2 * firstCardRank) + 4)) / 2;
 
             if (sum == apSum) {
+                rankedSet = new TreeSet<>(subList);
                 isHighCardFaceOnePresent = true;
                 highCardFaceOne = cardList.get(i).getFace();
-                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+//                highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+                highCardRank = sum;
                 return true;
             }
         }

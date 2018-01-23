@@ -113,7 +113,16 @@ Player Rankings:
 4 Jill TWO_PAIR TWO TEN
 
 Input:
+TS 6D 2S TH AC
+John 6H 4C
+Joe 3C 9D
+Jack 4D KH
 
+Output:
+Player Rankings:
+1 John TWO_PAIR SIX TEN
+2 Jack ONE_PAIR TEN
+3 Joe ONE_PAIR TEN
 
 
 
