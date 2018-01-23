@@ -18,18 +18,33 @@ import java.util.stream.Collectors;
     to create the ranking.
  */
 public class PokerHand implements Comparable<PokerHand> {
+    // Community deck and player info
     private CommunityDeck communityDeck;
     private Player player;
+
+    // rank of the hand is stored here as an enum
     private HandRank pokerHandRankType;
+
+    // this is used to store the player + community cards
     private Set<Card> totalHandSet;
+
+    //used to store the set which forms the hand, this could be 5 cards or less
     private Set<Card> rankedSet;
+
+    //used to verify if a totalHandSet starts with 7 cards
     private boolean isValid = true;
 
+    //used to get the final rank of each hand based on global enum
     private int handRank = 0;
+
+    // used to high card face detection, could be one or two
     private boolean isHighCardFaceOnePresent = false;
     private boolean isHighCardFaceTwoPresent = false;
     private CardFace highCardFaceOne;
     private CardFace highCardFaceTwo;
+
+    //obtained by adding all card ranks in totalHandSet
+    // used for tie breakers
     private int highCardRank;
 
     public PokerHand(CommunityDeck communityDeck, Player player) {
@@ -97,7 +112,7 @@ public class PokerHand implements Comparable<PokerHand> {
             Collections.sort(handList);
             isHighCardFaceOnePresent = true;
             highCardFaceOne = handList.get(0).getFace();
-            highCardRank = GlobalMaps.faceRankMap.get(highCardFaceOne);
+            highCardRank = totalHandSet.stream().mapToInt(Card::getFaceRank).sum();
 
         }
 
