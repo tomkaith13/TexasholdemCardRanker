@@ -70,8 +70,8 @@ All valid Player objects are added to a PlayerSet which uses the hashCode as Pla
 Once this data is fed into the program and EOF has been sent, the program creates the GameRanker Object.
 This Object taking in the CommunityDeck and playerSet to sort each player hand in descending ranking.
 
-
-
+Ranking is done by calculating the sum of the cards in the totalHandSet (player cards + community cards)
+if the specific rank is found. The rank logic is embedded into the PokerHand class itself.
 
  ========= Tried Test Samples =============
  Input:
