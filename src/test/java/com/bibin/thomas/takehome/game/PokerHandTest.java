@@ -25,6 +25,7 @@ public class PokerHandTest {
         PokerHand pokerHand = new PokerHand(communityDeck, player);
 
         assertEquals("Rank not equal to royal flush!!", HandRank.ROYAL_FLUSH, pokerHand.getPokerHandRankType());
+        assertEquals("Rank is not 10", 10, pokerHand.getHighCardRank());
     }
 
     @Test
