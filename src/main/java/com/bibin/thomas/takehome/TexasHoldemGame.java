@@ -26,8 +26,6 @@ public class TexasHoldemGame {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        boolean badInput = false;
-
         //linecount used to differentiate community deck vs player hand
         int lineCount = 0;
 
@@ -38,8 +36,7 @@ public class TexasHoldemGame {
 
                 if (!communityDeck.isValid()) {
                     System.out.println("Invalid Community deck. Please enter valid deck");
-                    badInput = true;
-                    break;
+                    return;
                 }
             } else {
                 PlayerCardValidator pcValidator = new PlayerCardValidator(input.nextLine());
@@ -47,21 +44,15 @@ public class TexasHoldemGame {
                 //Only valid player data is considered
                 if (!pcValidator.isValid()) {
                     System.out.println("Invalid Player data.");
-                    badInput = true;
-                    break;
+                    return;
                 }
                 Player p = new Player(pcValidator.getPlayerName(), pcValidator.getValidCardSet());
                 playerSet.add(p);
             }
             lineCount++;
         } //end while
-
-        if (!badInput) {
-            gameRanker = new GameRanker(communityDeck, playerSet);
-            gameRanker.displayPlayerHandRankings();
-            return;
-        }
-        System.out.println("Bad input found... Please try again!!");
+        gameRanker = new GameRanker(communityDeck, playerSet);
+        gameRanker.displayPlayerHandRankings();
     }
 
     private static void displayStartMessage() {
