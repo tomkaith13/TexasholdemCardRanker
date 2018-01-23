@@ -61,5 +61,7 @@ public class GameRanker {
         Collections.sort(playerHandList);
     }
 
-
+    public List<PokerHand> getPlayerHandList() {
+        return playerHandList;
+    }
 }
