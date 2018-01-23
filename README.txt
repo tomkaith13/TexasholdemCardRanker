@@ -2,6 +2,8 @@
  This is a simple Texas Holdem Card Ranker program that ranks the cards based on
   community cards and the player input.
 
+  The program was developed using the TDD approach and the unit tests can be found in the /test directory.
+
  The first line will contain the five community cards.
  Each line after that will have a player's name followed by their two cards.
 
