@@ -125,6 +125,22 @@ Player Rankings:
 3 Joe ONE_PAIR TEN
 
 
+Input:
+KS AS 3H 7C TS
+John QS JS
+Joe 5C 9D
+Becky JD QC
+Sam AC KH
+
+Output:
+Player Rankings:
+1 John ROYAL_FLUSH
+2 Becky STRAIGHT ACE
+3 Sam TWO_PAIR KING ACE
+4 Joe HIGH_CARD NINE
+
+
+
 
 
 

@@ -342,6 +342,8 @@ public class PokerHand implements Comparable<PokerHand> {
                     (jackList.stream().anyMatch(c -> c.getSuite().equals(aceCardSuit))) &&
                     (tenList.stream().anyMatch(c -> c.getSuite().equals(aceCardSuit)))
                     ) {
+                // Ranking of ACE + KING + QUEEN + JACK + TEN
+                highCardRank = 10;
                 return true;
             }
         }
