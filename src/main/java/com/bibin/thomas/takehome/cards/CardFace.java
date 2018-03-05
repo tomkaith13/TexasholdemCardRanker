@@ -1,7 +1,6 @@
 package com.bibin.thomas.takehome.cards;
 
 public enum CardFace {
-    TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN,
-    JACK, QUEEN, KING, ACE
+    ACE, KING, QUEEN, JACK, TEN, NINE, EIGHT, SEVEN, SIX, FIVE, FOUR, THREE, TWO
 }
 
